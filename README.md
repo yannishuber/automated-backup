@@ -1,5 +1,7 @@
 # Automated Encrypted Backup Using Restic
 
+Small script which automates my backups using [restic](https://restic.net/) and stores them encrypted on [Infomaniak Swiss Backup](https://www.infomaniak.com/en/swiss-backup).
+
 ## Installation
 
 To automate backups follow these simple steps:
