@@ -24,8 +24,8 @@ if [ -f "$TIMESTAMP_FILE" ]; then
   fi
 fi
 
-if [[ $(pmset -g ps | head -1) =~ "Battery" ]]; then
-  echo $(date +"%Y-%m-%d %T") "Computer is not connected to the power source."
+if [[ $(pmset -g ps | head -1) =~ "Battery" ]] && [[ $(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1) < 40 ]]; then
+  echo $(date +"%Y-%m-%d %T") "Battery too low, backup skipped."
   exit 4
 fi
 
