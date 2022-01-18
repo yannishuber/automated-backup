@@ -46,4 +46,4 @@ That's it. The backups will be executed automatically every 8 hours.
 
 ## Credits
 
-Szymon Krajewski, [https://szymonkrajewski.pl/macos-backup-restic/]()
+Szymon Krajewski, <https://szymonkrajewski.pl/macos-backup-restic/>
