@@ -36,8 +36,11 @@ To automate backups follow these simple steps:
      
      Copy the file `ch.yannishuber.restic-backup.plist` to `~/Library/LaunchAgents/` and execute 
      ```bash
-     launchctl load ~/Library/LaunchAgents/ch.yannishuber.restic-backup.plist
+     launchctl bootstrap gui/501 ~/Library/LaunchAgents/ch.yannishuber.restic-backup.plistq
      ```
+  4. **Give `bash` full disk access.**
+
+     In order for the script to execute properly, we have to give `/bin/bash` full disk access in the macOS system preferences: `System Preferences > Security & Privacy > Full Disk Access`.
 
 That's it. The backups will be executed automatically every 8 hours.
 

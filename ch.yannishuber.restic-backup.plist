@@ -15,7 +15,7 @@
     <integer>600</integer>
     
     <key>WorkingDirectory</key>
-    <string>/users/yannis/</string>
+    <string>/users/yannis/scripts/</string>
     
     <key>StandardOutPath</key>
     <string>/users/yannis/Library/Logs/ch.yannishuber.restic-backup.out.log</string>
