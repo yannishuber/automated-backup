@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Backup script source: https://szymonkrajewski.pl/macos-backup-restic/
+
 source /users/yannis/.restic-config
 
 PID_FILE=~/.restic_backup.pid
@@ -33,7 +35,7 @@ echo $$ > $PID_FILE
 echo $(date +"%Y-%m-%d %T") "Backup start"
 
 # Backup Document folder
-/opt/homebrew/bin/restic backup /users/yannis/documents --exclude-file=/users/yannis/.restic-exclude
+/opt/homebrew/bin/restic backup --host=mbp-yhu /users/yannis/documents --exclude-file=/users/yannis/.restic-exclude
 
 # Prune old backups
 /opt/homebrew/bin/restic forget --keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 75 --prune
