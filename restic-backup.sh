@@ -37,6 +37,9 @@ echo $(date +"%Y-%m-%d %T") "Backup start"
 # Backup Document folder
 /opt/homebrew/bin/restic backup --host=mbp-yhu /users/yannis/documents --exclude-file=/users/yannis/.restic-exclude
 
+# Backup Pictures folder
+/opt/homebrew/bin/restic backup --host=mbp-yhu /users/yannis/pictures --exclude-file=/users/yannis/.restic-exclude
+
 # Prune old backups
 /opt/homebrew/bin/restic forget --keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 75 --prune
 
