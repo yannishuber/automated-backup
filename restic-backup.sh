@@ -22,6 +22,7 @@ if [ -f "$TIMESTAMP_FILE" ]; then
   current_time=$(date +"%s")
 
   if [ "$current_time" -lt "$time_run" ]; then
+    echo "Too soon to backup"
     exit 2
   fi
 fi
@@ -34,14 +35,31 @@ fi
 echo $$ > $PID_FILE
 echo $(date +"%Y-%m-%d %T") "Backup start"
 
+ERRORS=0
+
 # Backup Document folder
 /opt/homebrew/bin/restic backup --host=mbp-yhu /users/yannis/documents --exclude-file=/users/yannis/.restic-exclude
+
+if [[ $? -ne 0 ]]; then 
+  ERRORS=1
+fi
 
 # Backup Pictures folder
 /opt/homebrew/bin/restic backup --host=mbp-yhu /users/yannis/pictures --exclude-file=/users/yannis/.restic-exclude
 
+if [[ $? -ne 0 ]]; then 
+  ERRORS=1
+fi
+
+
 # Prune old backups
 /opt/homebrew/bin/restic forget --keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 75 --prune
+
+if [[ $? -ne 0 ]]; then 
+  ERRORS=1
+fi
+
+curl --retry 3 https://hc-ping.com/$(security find-generic-password -s restic-backup-healthcheck-uuid -w)/$ERRORS
 
 echo $(date +"%Y-%m-%d %T") "Backup finished"
 echo $(date -v +8H +"%s") > $TIMESTAMP_FILE
