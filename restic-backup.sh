@@ -37,6 +37,8 @@ fi
 echo $$ > $PID_FILE
 echo $(date +"%Y-%m-%d %T") "Backup start"
 
+curl --retry 3 -X POST https://hc-ping.com/$(security find-generic-password -s restic-backup-healthcheck-uuid -w)/start
+
 ERRORS=0
 
 # Backup Document folder
@@ -66,7 +68,11 @@ cat $TEMP_LOG_FILE >> $LOG_FILE
 cat $TEMP_LOG_FILE | curl --retry 3 -X POST --data-binary "@-" https://hc-ping.com/$(security find-generic-password -s restic-backup-healthcheck-uuid -w)/$ERRORS
 
 echo $(date +"%Y-%m-%d %T") "Backup finished"
-echo $(date -v +8H +"%s") > $TIMESTAMP_FILE
+
+# If there where errors retry backup sooner than in 8 hours
+if [[ $ERRORS == 0 ]]; then
+  echo $(date -v +8H +"%s") > $TIMESTAMP_FILE
+fi
 
 rm $PID_FILE
 rm $TEMP_LOG_FILE
