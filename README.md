@@ -6,7 +6,7 @@ Small script which automates my backups using [restic](https://restic.net/) and 
 
 To automate backups follow these simple steps:
 
-  1. **Save connection details in the macOS keychain.**
+  1. **Save connection details in the `secret-tool` secret manager**
 
      The connection details for the Infomaniak OpenStack Swift Keystone 3 backup location can be found in the Infomaniak Manager under `Swiss Backup > Device management`.
 
