@@ -55,8 +55,8 @@ if [ -f "$TIMESTAMP_FILE" ]; then
   fi
 fi
 
-# check if the battery charge rate is at least 40%.
-if [[ $(upower -i $(upower -e | grep BAT) | grep --color=never -E "percentage" | cut -d":" -f2  | xargs | sed 's/%//') -lt 40 ]]; then
+# check if the battery charge rate is at least 40% or if the battery is charging
+if [[ $(upower -i $(upower -e | grep BAT) | grep --color=never -E "percentage" | cut -d":" -f2  | xargs | sed 's/%//') -lt 40  && $(upower -i $(upower -e | grep BAT) | grep --color=never -E "state" | cut -d":" -f2 | xargs) != "charging" ]]; then
   echo $(date +"%Y-%m-%d %T") "Battery too low, backup skipped."
   exit 4
 fi
